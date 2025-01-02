@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pd24_book_tracker_app/models/book.dart';
 import 'package:pd24_book_tracker_app/network/network.dart';
 import 'package:pd24_book_tracker_app/pages/favorites_screen.dart';
 import 'package:pd24_book_tracker_app/pages/home_screen.dart';
@@ -36,7 +37,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Network _network = Network();
 
   Future<void> _searchBooks(String query) async {
-    await _network.searchBooks(query);
+    try {
+      List<Book> books = await _network.searchBooks(query);
+      print('Books: ${books.toString()}');
+    } catch (e) {
+      print(e);
+    }
   }
 
   final List<Widget> _screens = <Widget>[

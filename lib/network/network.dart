@@ -6,14 +6,23 @@ class Network {
   // https://www.googleapis.com/books/v1/volumes?q=flutter
   static const String _baseUrl = 'https://www.googleapis.com/books/v1/volumes';
 
-  Future<void> searchBooks(String query) async {
+  Future<List<Book>> searchBooks(String query) async {
     var url = Uri.parse('$_baseUrl?q=$query');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      print(data);
+      if (data['items'] != null && data['items'] is List) {
+        List<Book> books = (data['items'] as List<dynamic>)
+            .map(
+              (book) => Book.fromJson(book as Map<String, dynamic>),
+            )
+            .toList();
+        return books;
+      } else {
+        return [];
+      }
     } else {
-      print('Request failed with status: ${response.statusCode}.');
+      throw Exception('Failed to load books');
     }
   }
 }
