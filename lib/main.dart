@@ -28,6 +28,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
         items: const <BottomNavigationBarItem>[
           // home, saved, favorites
           BottomNavigationBarItem(
@@ -58,6 +61,13 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Favorites',
           ),
         ],
+        selectedItemColor: Theme.of(context).colorScheme.primary,
+        unselectedItemColor: Theme.of(context).colorScheme.onSurface,
+        onTap: (value) {
+          setState(() {
+            _currentIndex = value;
+          });
+        },
       ),
     );
   }
