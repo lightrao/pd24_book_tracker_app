@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pd24_book_tracker_app/pages/favorites_screen.dart';
+import 'package:pd24_book_tracker_app/pages/home_screen.dart';
+import 'package:pd24_book_tracker_app/pages/saved_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,6 +32,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
+  final List<Widget> _screens = <Widget>[
+    const HomeScreen(),
+    const SavedScreen(),
+    const FavoritesScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +45,12 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('A Book Tracker'),
       ),
-      body: Column(
-        children: const <Widget>[
-          Text(
-            'Welcome to Material3!',
-          ),
-        ],
+      body: Center(
+        child: _screens[_currentIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         items: const <BottomNavigationBarItem>[
           // home, saved, favorites
           BottomNavigationBarItem(
@@ -61,8 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Favorites',
           ),
         ],
-        selectedItemColor: Theme.of(context).colorScheme.primary,
-        unselectedItemColor: Theme.of(context).colorScheme.onSurface,
+        selectedItemColor: Theme.of(context).colorScheme.onPrimary,
+        unselectedItemColor: Theme.of(context).colorScheme.onSurfaceVariant,
         onTap: (value) {
           setState(() {
             _currentIndex = value;
