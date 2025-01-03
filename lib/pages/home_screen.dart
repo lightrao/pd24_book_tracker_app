@@ -65,24 +65,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       children: [
                         Expanded(
-                          child: Image.network(
-                            book.imageLinks['thumbnail'] ?? '',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            book.title,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.network(
+                              book.imageLinks['thumbnail'] ?? '',
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
+                            book.title,
+                            style: Theme.of(context).textTheme.titleSmall,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
                             book.authors.join(', '),
+                            style: Theme.of(context).textTheme.bodySmall,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           ),
                         ),
                       ],
