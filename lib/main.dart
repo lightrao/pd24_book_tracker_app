@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pd24_book_tracker_app/models/book.dart';
-import 'package:pd24_book_tracker_app/network/network.dart';
 import 'package:pd24_book_tracker_app/pages/favorites_screen.dart';
 import 'package:pd24_book_tracker_app/pages/home_screen.dart';
 import 'package:pd24_book_tracker_app/pages/saved_screen.dart';
@@ -34,28 +32,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
-  Network _network = Network();
-
-  Future<void> _searchBooks(String query) async {
-    try {
-      List<Book> books = await _network.searchBooks(query);
-      print('Books: ${books.toString()}');
-    } catch (e) {
-      print(e);
-    }
-  }
 
   final List<Widget> _screens = <Widget>[
     const HomeScreen(),
     const SavedScreen(),
     const FavoritesScreen(),
   ];
-
-  @override
-  void initState() {
-    _searchBooks('flutter');
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
