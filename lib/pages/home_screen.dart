@@ -48,24 +48,68 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Expanded(
-              child: Container(
-                width: double.infinity,
-                child: ListView.builder(
-                  itemCount: _books.length,
-                  itemBuilder: (context, index) {
-                    Book book = _books[index];
-                    return ListTile(
-                      title: Text(book.title),
-                      subtitle: Text(
-                        book.authors.join(', '),
-                      ),
-                      leading:
-                          Image.network(book.imageLinks['thumbnail'] ?? ''),
-                    );
-                  },
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1 / 1.5,
                 ),
+                itemCount: _books.length,
+                itemBuilder: (context, index) {
+                  Book book = _books[index];
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.onSecondary,
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Image.network(
+                            book.imageLinks['thumbnail'] ?? '',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            book.title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            book.authors.join(', '),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
+            // Expanded(
+            //   child: SizedBox(
+            //     width: double.infinity,
+            //     child: ListView.builder(
+            //       itemCount: _books.length,
+            //       itemBuilder: (context, index) {
+            //         Book book = _books[index];
+            //         return ListTile(
+            //           title: Text(book.title),
+            //           subtitle: Text(
+            //             book.authors.join(', '),
+            //           ),
+            //           leading:
+            //               Image.network(book.imageLinks['thumbnail'] ?? ''),
+            //         );
+            //       },
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
