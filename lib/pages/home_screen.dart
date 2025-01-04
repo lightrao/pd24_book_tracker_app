@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pd24_book_tracker_app/models/book.dart';
 import 'package:pd24_book_tracker_app/network/network.dart';
-import 'package:pd24_book_tracker_app/pages/book_details.dart';
 import 'package:pd24_book_tracker_app/utils/book_details_arguments.dart';
 
 class HomeScreen extends StatefulWidget {
