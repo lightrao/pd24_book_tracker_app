@@ -79,6 +79,12 @@ class DatabaseHelper {
     return await db.delete(_tableName, where: 'id = ?', whereArgs: [id]);
   }
 
+  // delete all books
+  Future<int> deleteAllBooks() async {
+    Database db = await _instance.database;
+    return await db.delete(_tableName);
+  }
+
   // Get favorite books
   Future<List<Book>> getFavorites() async {
     Database db = await _instance.database;

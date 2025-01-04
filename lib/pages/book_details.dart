@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pd24_book_tracker_app/db/database_helper.dart';
 import 'package:pd24_book_tracker_app/models/book.dart';
 import 'package:pd24_book_tracker_app/utils/book_details_arguments.dart';
 
@@ -57,9 +58,30 @@ class _BookDetailsState extends State<BookDetails> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(onPressed: () {}, child: const Text('Save')),
+                ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        DatabaseHelper databaseHelper = DatabaseHelper();
+                        int savedIndex = await databaseHelper.insert(book);
+                        print('Saved book at index: $savedIndex');
+                      } catch (e) {
+                        print('Error saving book: $e');
+                      }
+                    },
+                    child: const Text('Save')),
+                ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        DatabaseHelper databaseHelper = DatabaseHelper();
+                        await databaseHelper.deleteAllBooks();
+                        print('Deleted all books');
+                      } catch (e) {
+                        print('Error deleting all books: $e');
+                      }
+                    },
+                    child: const Text('Delete All Books')),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () async {},
                   icon: const Icon(Icons.favorite),
                   label: const Text('Favorite'),
                 ),

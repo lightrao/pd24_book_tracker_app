@@ -5,6 +5,7 @@ import 'package:pd24_book_tracker_app/pages/home_screen.dart';
 import 'package:pd24_book_tracker_app/pages/saved_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
