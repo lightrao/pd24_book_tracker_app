@@ -7,8 +7,15 @@ class DatabaseHelper {
   static const _databaseVersion = 1;
   static const _tableName = 'books';
 
+  // Corrected static instance initialization
+  static final DatabaseHelper _instance = DatabaseHelper._privateConstructor();
+
   DatabaseHelper._privateConstructor();
-  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+
+  // Factory constructor to return the singleton instance
+  factory DatabaseHelper() {
+    return _instance;
+  }
 
   static Database? _database;
 
@@ -17,8 +24,8 @@ class DatabaseHelper {
     return _database!;
   }
 
-  _initDatabase() async {
-    //device/data/datasename.db
+  Future<Database> _initDatabase() async {
+    // Get the path to the database
     String path = join(await getDatabasesPath(), _databaseName);
     return await openDatabase(
       path,
@@ -28,6 +35,7 @@ class DatabaseHelper {
   }
 
   Future _onCreate(Database db, int version) async {
+    // Create the books table
     await db.execute('''
       CREATE TABLE $_tableName (
         id TEXT PRIMARY KEY,
@@ -48,12 +56,12 @@ class DatabaseHelper {
   }
 
   Future<int> insert(Book book) async {
-    Database db = await instance.database;
+    Database db = await _instance.database;
     return await db.insert(_tableName, book.toJson());
   }
 
   Future<List<Book>> readAllBooks() async {
-    Database db = await instance.database;
+    Database db = await _instance.database;
     var books = await db.query(_tableName);
     return books.isNotEmpty
         ? books.map((bookData) => Book.fromJsonDatabase(bookData)).toList()
@@ -61,19 +69,19 @@ class DatabaseHelper {
   }
 
   Future<int> toggleFavoriteStatus(String id, bool isFavorite) async {
-    Database db = await instance.database;
+    Database db = await _instance.database;
     return await db.update(_tableName, {'favorite': isFavorite ? 1 : 0},
         where: 'id = ?', whereArgs: [id]);
   }
 
   Future<int> deleteBook(String id) async {
-    Database db = await instance.database;
+    Database db = await _instance.database;
     return await db.delete(_tableName, where: 'id = ?', whereArgs: [id]);
   }
 
   // Get favorite books
   Future<List<Book>> getFavorites() async {
-    Database db = await instance.database;
+    Database db = await _instance.database;
     var favBooks =
         await db.query(_tableName, where: 'favorite = ?', whereArgs: [1]);
 
