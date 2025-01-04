@@ -6,7 +6,7 @@ class DatabaseHelper {
   static const _databaseName = 'book_database.db';
   static const _databaseVersion = 1;
   static const _tableName = 'books';
-
+  static Database? _database;
   // Corrected static instance initialization
   static final DatabaseHelper _instance = DatabaseHelper._privateConstructor();
 
@@ -17,9 +17,7 @@ class DatabaseHelper {
     return _instance;
   }
 
-  static Database? _database;
-
-  Future<Database> get database async {
+  Future<Database> _getDatabase() async {
     _database ??= await _initDatabase();
     return _database!;
   }
@@ -56,12 +54,12 @@ class DatabaseHelper {
   }
 
   Future<int> insert(Book book) async {
-    Database db = await _instance.database;
+    Database db = await _instance._getDatabase();
     return await db.insert(_tableName, book.toJson());
   }
 
   Future<List<Book>> readAllBooks() async {
-    Database db = await _instance.database;
+    Database db = await _instance._getDatabase();
     var books = await db.query(_tableName);
     return books.isNotEmpty
         ? books.map((bookData) => Book.fromJsonDatabase(bookData)).toList()
@@ -69,25 +67,25 @@ class DatabaseHelper {
   }
 
   Future<int> toggleFavoriteStatus(String id, bool isFavorite) async {
-    Database db = await _instance.database;
+    Database db = await _instance._getDatabase();
     return await db.update(_tableName, {'favorite': isFavorite ? 1 : 0},
         where: 'id = ?', whereArgs: [id]);
   }
 
   Future<int> deleteBook(String id) async {
-    Database db = await _instance.database;
+    Database db = await _instance._getDatabase();
     return await db.delete(_tableName, where: 'id = ?', whereArgs: [id]);
   }
 
   // delete all books
   Future<int> deleteAllBooks() async {
-    Database db = await _instance.database;
+    Database db = await _instance._getDatabase();
     return await db.delete(_tableName);
   }
 
   // Get favorite books
   Future<List<Book>> getFavorites() async {
-    Database db = await _instance.database;
+    Database db = await _instance._getDatabase();
     var favBooks =
         await db.query(_tableName, where: 'favorite = ?', whereArgs: [1]);
 
