@@ -34,45 +34,50 @@ class _BookDetailsState extends State<BookDetails> {
                   fit: BoxFit.cover,
                 ),
               ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                book.title,
-                style: theme.headlineSmall,
-              ),
+            Text(
+              book.title,
+              style: theme.headlineSmall,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                book.authors.join(', '),
-                style: theme.labelLarge,
-              ),
+            Text(
+              book.authors.join(', '),
+              style: theme.labelLarge,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Published: ${book.publishedDate}',
-                style: theme.bodySmall,
-              ),
+            Text(
+              'Published: ${book.publishedDate}',
+              style: theme.bodySmall,
             ),
-            // page count
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Page Count: ${book.pageCount}',
-                style: theme.bodySmall,
-              ),
+            Text(
+              'Page Count: ${book.pageCount}',
+              style: theme.bodySmall,
             ),
-            // language
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Language: ${book.language}',
-                style: theme.bodySmall,
-              ),
+            Text(
+              'Language: ${book.language}',
+              style: theme.bodySmall,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(onPressed: () {}, child: const Text('Save')),
+                ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.favorite),
+                  label: const Text('Favorite'),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Description',
+              style: theme.titleMedium,
+            ),
+            Container(
+              margin: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.onSecondary,
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: Text(
                 book.description,
                 style: const TextStyle(
