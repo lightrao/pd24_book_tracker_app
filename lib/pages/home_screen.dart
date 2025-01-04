@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pd24_book_tracker_app/components/grid_view_widget.dart';
 import 'package:pd24_book_tracker_app/models/book.dart';
 import 'package:pd24_book_tracker_app/network/network.dart';
-import 'package:pd24_book_tracker_app/utils/book_details_arguments.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -48,86 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1 / 1.5,
-                ),
-                itemCount: _books.length,
-                itemBuilder: (context, index) {
-                  Book book = _books[index];
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.onSecondary,
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/book_details',
-                            arguments: BookDetailsArguments(itemBook: book));
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => BookDetails(book: book),
-                        //   ),
-                        // );
-                      },
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.network(
-                                book.imageLinks['thumbnail'] ?? '',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              book.title,
-                              style: Theme.of(context).textTheme.titleSmall,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              book.authors.join(', '),
-                              style: Theme.of(context).textTheme.bodySmall,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            // Expanded(
-            //   child: SizedBox(
-            //     width: double.infinity,
-            //     child: ListView.builder(
-            //       itemCount: _books.length,
-            //       itemBuilder: (context, index) {
-            //         Book book = _books[index];
-            //         return ListTile(
-            //           title: Text(book.title),
-            //           subtitle: Text(
-            //             book.authors.join(', '),
-            //           ),
-            //           leading:
-            //               Image.network(book.imageLinks['thumbnail'] ?? ''),
-            //         );
-            //       },
-            //     ),
-            //   ),
-            // ),
+            GridViewWidget(books: _books),
           ],
         ),
       ),
