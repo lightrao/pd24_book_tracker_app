@@ -65,9 +65,8 @@ class _SavedScreenState extends State<SavedScreen> {
                       icon: const Icon(Icons.delete),
                       onPressed: () {
                         // delete the book from the database
-                        // some useful code snippets are provided below:
-                        // DatabaseHelper databaseHelper = DatabaseHelper();
-                        // databaseHelper.deleteBook(book.id);
+                        DatabaseHelper databaseHelper = DatabaseHelper();
+                        databaseHelper.deleteBook(book.id);
                         setState(() {});
                       },
                     ),
