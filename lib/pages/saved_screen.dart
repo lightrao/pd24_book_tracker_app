@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pd24_book_tracker_app/db/database_helper.dart';
 import 'package:pd24_book_tracker_app/models/book.dart';
+import 'package:pd24_book_tracker_app/utils/book_details_arguments.dart';
 
 class SavedScreen extends StatefulWidget {
   const SavedScreen({super.key});
@@ -72,9 +73,9 @@ class _SavedScreenState extends State<SavedScreen> {
                     ),
                     onTap: () {
                       // navigate to the book details screen
-                      // some useful code snippets are provided below:
-                      // Navigator.pushNamed(context, '/book_details',
-                      //     arguments: BookDetailsArguments(itemBook: book));
+                      Navigator.pushNamed(context, '/book_details',
+                          arguments: BookDetailsArguments(
+                              itemBook: book, isFromSavedScreen: true));
                     },
                   ),
                 );

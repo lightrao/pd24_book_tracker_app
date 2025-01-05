@@ -16,6 +16,7 @@ class _BookDetailsState extends State<BookDetails> {
     final BookDetailsArguments bookDetailsArguments =
         ModalRoute.of(context)?.settings.arguments as BookDetailsArguments;
     final Book book = bookDetailsArguments.itemBook;
+    final bool isFromSavedScreen = bookDetailsArguments.isFromSavedScreen;
     final TextTheme theme = Theme.of(context).textTheme;
 
     return Scaffold(
@@ -55,28 +56,37 @@ class _BookDetailsState extends State<BookDetails> {
               'Language: ${book.language}',
               style: theme.bodySmall,
             ),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        DatabaseHelper databaseHelper = DatabaseHelper();
-                        int savedIndex = await databaseHelper.insert(book);
-                        print('Saved book at index: $savedIndex');
-                        SnackBar snackBar = SnackBar(
-                          content: Text('Book saved at index: $savedIndex'),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      } catch (e) {
-                        print('Error saving book: $e');
-                        SnackBar snackBar = SnackBar(
-                          content: Text('Error saving book: $e'),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                    },
-                    child: const Text('Save')),
+                !isFromSavedScreen
+                    ? ElevatedButton(
+                        onPressed: () async {
+                          try {
+                            DatabaseHelper databaseHelper = DatabaseHelper();
+                            int savedIndex = await databaseHelper.insert(book);
+                            print('Saved book at index: $savedIndex');
+                            SnackBar snackBar = SnackBar(
+                              content: Text('Book saved at index: $savedIndex'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } catch (e) {
+                            print('Error saving book: $e');
+                            SnackBar snackBar = SnackBar(
+                              content: Text('Error saving book: $e'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        },
+                        child: const Text('Save'))
+                    : ElevatedButton.icon(
+                        onPressed: () async {},
+                        icon: const Icon(Icons.favorite),
+                        label: const Text('Favorite'),
+                      ),
                 ElevatedButton(
                     onPressed: () async {
                       try {
@@ -96,11 +106,6 @@ class _BookDetailsState extends State<BookDetails> {
                       }
                     },
                     child: const Text('Delete All Books')),
-                ElevatedButton.icon(
-                  onPressed: () async {},
-                  icon: const Icon(Icons.favorite),
-                  label: const Text('Favorite'),
-                ),
               ],
             ),
             SizedBox(height: 20),
