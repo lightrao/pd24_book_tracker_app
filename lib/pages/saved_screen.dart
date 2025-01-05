@@ -47,14 +47,14 @@ class _SavedScreenState extends State<SavedScreen> {
                                     DatabaseHelper();
                                 int updated =
                                     await databaseHelper.toggleFavoriteStatus(
-                                        book.id, book.isFavorite);
+                                        book.id, !book.isFavorite);
                                 print('Updated: $updated');
                               } catch (e) {
                                 print('Error reading all books: $e');
                               }
                             },
                             icon: const Icon(Icons.favorite),
-                            label: const Text('Add to Favorites')),
+                            label: const Text('Switch Favorite Status')),
                       ],
                     ),
                     leading: Image.network(
