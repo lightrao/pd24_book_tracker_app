@@ -32,19 +32,41 @@ class _SavedScreenState extends State<SavedScreen> {
               itemCount: snapshot.data?.length,
               itemBuilder: (context, index) {
                 Book book = snapshot.data![index];
-                return ListTile(
-                  title: Text(book.title),
-                  subtitle: Text(book.authors.join(', ')),
-                  leading: Image.network(
-                    book.imageLinks['thumbnail'] ?? '',
-                    fit: BoxFit.cover,
+                return Card(
+                  child: ListTile(
+                    title: Text(book.title),
+                    subtitle: Column(
+                      children: [
+                        Text(book.authors.join(', ')),
+                        ElevatedButton.icon(
+                            onPressed: () async {
+                              // toggle the favorite flag of the book
+                            },
+                            icon: const Icon(Icons.favorite),
+                            label: const Text('Add to Favorites')),
+                      ],
+                    ),
+                    leading: Image.network(
+                      book.imageLinks['thumbnail'] ?? '',
+                      fit: BoxFit.cover,
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        // delete the book from the database
+                        // some useful code snippets are provided below:
+                        // DatabaseHelper databaseHelper = DatabaseHelper();
+                        // databaseHelper.deleteBook(book.id);
+                        setState(() {});
+                      },
+                    ),
+                    onTap: () {
+                      // navigate to the book details screen
+                      // some useful code snippets are provided below:
+                      // Navigator.pushNamed(context, '/book_details',
+                      //     arguments: BookDetailsArguments(itemBook: book));
+                    },
                   ),
-                  onTap: () {
-                    // navigate to the book details screen
-                    // some useful code snippets are provided below:
-                    // Navigator.pushNamed(context, '/book_details',
-                    //     arguments: BookDetailsArguments(itemBook: book));
-                  },
                 );
               },
             );

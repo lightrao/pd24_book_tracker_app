@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
   static const _databaseName = 'book_database.db';
-  static const _databaseVersion = 1;
+  static const _databaseVersion = 2;
   static const _tableName = 'books';
   static Database? _database;
   // Corrected static instance initialization
