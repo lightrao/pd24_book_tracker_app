@@ -41,21 +41,29 @@ class _SavedScreenState extends State<SavedScreen> {
                       children: [
                         Text(book.authors.join(', ')),
                         ElevatedButton.icon(
-                            onPressed: () async {
-                              try {
-                                print(book.isFavorite);
-                                DatabaseHelper databaseHelper =
-                                    DatabaseHelper();
-                                int updated =
-                                    await databaseHelper.toggleFavoriteStatus(
-                                        book.id, !book.isFavorite);
-                                print('Updated: $updated');
-                              } catch (e) {
-                                print('Error reading all books: $e');
-                              }
-                            },
-                            icon: const Icon(Icons.favorite),
-                            label: const Text('Switch Favorite Status')),
+                          onPressed: () async {
+                            try {
+                              book.isFavorite = !book.isFavorite;
+                              DatabaseHelper databaseHelper = DatabaseHelper();
+                              int updated =
+                                  await databaseHelper.toggleFavoriteStatus(
+                                      book.id, book.isFavorite);
+                              setState(() {});
+                              print('Updated: $updated');
+                            } catch (e) {
+                              print('Error reading all books: $e');
+                            }
+                          },
+                          icon: Icon(
+                            book.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: book.isFavorite ? Colors.red : null,
+                          ),
+                          label: Text(book.isFavorite
+                              ? 'Remove from favorites'
+                              : 'Add to favorites'),
+                        ),
                       ],
                     ),
                     leading: Image.network(
