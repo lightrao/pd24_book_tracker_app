@@ -97,23 +97,7 @@ class _BookDetailsState extends State<BookDetails> {
                     },
                     child: const Text('Delete All Books')),
                 ElevatedButton.icon(
-                  onPressed: () async {
-                    try {
-                      DatabaseHelper databaseHelper = DatabaseHelper();
-                      List<Book> books = await databaseHelper.readAllBooks();
-                      print('Read all books: ${books.toString()}');
-                      SnackBar snackBar = SnackBar(
-                        content: Text('Read all books: ${books.toString()}'),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    } catch (e) {
-                      print('Error reading all books: $e');
-                      SnackBar snackBar = SnackBar(
-                        content: Text('Error reading all books: $e'),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                  },
+                  onPressed: () async {},
                   icon: const Icon(Icons.favorite),
                   label: const Text('Favorite'),
                 ),

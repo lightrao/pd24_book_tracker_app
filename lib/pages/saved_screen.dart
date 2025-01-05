@@ -32,6 +32,7 @@ class _SavedScreenState extends State<SavedScreen> {
               itemCount: snapshot.data?.length,
               itemBuilder: (context, index) {
                 Book book = snapshot.data![index];
+                print('Book: $book');
                 return Card(
                   child: ListTile(
                     title: Text(book.title),
@@ -40,7 +41,17 @@ class _SavedScreenState extends State<SavedScreen> {
                         Text(book.authors.join(', ')),
                         ElevatedButton.icon(
                             onPressed: () async {
-                              // toggle the favorite flag of the book
+                              try {
+                                print(book.isFavorite);
+                                DatabaseHelper databaseHelper =
+                                    DatabaseHelper();
+                                int updated =
+                                    await databaseHelper.toggleFavoriteStatus(
+                                        book.id, book.isFavorite);
+                                print('Updated: $updated');
+                              } catch (e) {
+                                print('Error reading all books: $e');
+                              }
                             },
                             icon: const Icon(Icons.favorite),
                             label: const Text('Add to Favorites')),
