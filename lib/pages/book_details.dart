@@ -64,8 +64,16 @@ class _BookDetailsState extends State<BookDetails> {
                         DatabaseHelper databaseHelper = DatabaseHelper();
                         int savedIndex = await databaseHelper.insert(book);
                         print('Saved book at index: $savedIndex');
+                        SnackBar snackBar = SnackBar(
+                          content: Text('Book saved at index: $savedIndex'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } catch (e) {
                         print('Error saving book: $e');
+                        SnackBar snackBar = SnackBar(
+                          content: Text('Error saving book: $e'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     },
                     child: const Text('Save')),
@@ -75,13 +83,37 @@ class _BookDetailsState extends State<BookDetails> {
                         DatabaseHelper databaseHelper = DatabaseHelper();
                         await databaseHelper.deleteAllBooks();
                         print('Deleted all books');
+                        SnackBar snackBar = SnackBar(
+                          content: const Text('All books deleted'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } catch (e) {
                         print('Error deleting all books: $e');
+                        SnackBar snackBar = SnackBar(
+                          content: Text('Error deleting all books: $e'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     },
                     child: const Text('Delete All Books')),
                 ElevatedButton.icon(
-                  onPressed: () async {},
+                  onPressed: () async {
+                    try {
+                      DatabaseHelper databaseHelper = DatabaseHelper();
+                      List<Book> books = await databaseHelper.readAllBooks();
+                      print('Read all books: ${books.toString()}');
+                      SnackBar snackBar = SnackBar(
+                        content: Text('Read all books: ${books.toString()}'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    } catch (e) {
+                      print('Error reading all books: $e');
+                      SnackBar snackBar = SnackBar(
+                        content: Text('Error reading all books: $e'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                  },
                   icon: const Icon(Icons.favorite),
                   label: const Text('Favorite'),
                 ),
